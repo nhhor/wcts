@@ -3,9 +3,9 @@
 
 
 Built using:
-- Vue
-- Vite
+- [Vue](https://vuejs.org/)
+- [Vite](https://vite.dev/)
 - [VueUse](https://vueuse.org/guide/components.html)
 
 
-git init && git add -A && git commit -m "initial commit"
+Deployed to https://nhhor.github.io/wcts/
