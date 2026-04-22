@@ -13,7 +13,7 @@
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/",
-    "deploy": "deploy --repo=github --owner=nhhor --repo=wcts --dist=dist"
+    "deploy": "./deploy.sh"
   },
   "dependencies": {
     "@vueuse/core": "^14.2.1",
