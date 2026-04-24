@@ -13,11 +13,17 @@ import TheWelcome from "./components/TheWelcome.vue";
   <main>
     <TheWelcome />
   </main>
+  <footer>-Footer-</footer>
 </template>
 
 <style scoped>
 header {
   line-height: 1.5;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 0;
 }
 
 .logo {

@@ -6,5 +6,6 @@ Built using:
 - [VueUse](https://vueuse.org/guide/components.html)
 
 ### Deployed to https://nhhor.github.io/wcts/
-`npm run build`
-`npm run deploy`
+- `npm run dev`
+- `npm run deploy`
+    - `npm run build` _(deploy includes build step.)_
