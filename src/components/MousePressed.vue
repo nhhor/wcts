@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMouse } from '@vueuse/core'
+import { useMousePressed } from '@vueuse/core'
 import { VIcon, VTooltip } from "vuetify/components";
 
 const {title, tooltip, index} = defineProps({
@@ -7,7 +7,8 @@ const {title, tooltip, index} = defineProps({
   title: String,
   tooltip: String
 })
-const { x, y } = useMouse()
+
+const { pressed } = useMousePressed()
 
 </script>
 
@@ -15,9 +16,10 @@ const { x, y } = useMouse()
 		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
       {{ index || 0 > 0 ? `(${index})` : '' }}
 			<span class="itemWrapper" v-bind="props">   
-        <v-icon v-if="true" color="error" icon="mdi-mouse-outline" />
+        <v-icon v-if="pressed" color="success" icon="mdi-mouse-left-click" />
+        <v-icon v-else color="error" icon="mdi-mouse" />
         <span class="itemTitle">{{ title }}</span>     
-        <p>[{{ x }}, {{ y }}]</p>
+        <p>[{{ pressed }}]</p>
       </span>
     </v-tooltip> 
 </template>

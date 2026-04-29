@@ -1,9 +1,7 @@
 <script setup lang="ts">
-// import { ref } from 'vue' 
+import { VIcon, VTooltip } from "vuetify/components";
 import MousePosition from "./MousePosition.vue";
-
-import MouseIcon from "./icons/IconMouse.vue";
-
+import MousePressed from "./MousePressed.vue";
 
 const items = [
 	{
@@ -11,11 +9,18 @@ const items = [
 		alt: 'fluffy, alert Amur leopard',
 	}, 
 	{
-    alt: 'fluffy Amur leopard looking up',
-    icon: MouseIcon,
-    header: 'mouse',
-    description: '... where your mouse is on the tab.',
-    child: MousePosition
+		child: MousePosition,
+		itemProps: {
+			title: 'Mouse Position',
+			tooltip: 'They can see where your mouse is...'
+		}
+	}, 
+	{
+		child: MousePressed,
+		itemProps: {
+			title: 'Mouse Pressed',
+			tooltip: 'They can see if your mouse is pressed...'
+		}
 	}, 
 	{
 		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_16.jpg', 
@@ -44,15 +49,9 @@ let m = n_items - has_mid; /* how many are ON the circle */
 <template>
   <div class="container" :style="{ '--m': m }">
     <div v-for="(item, index) in items" :style="index - has_mid >= 0 ? `--i: ${index}` : null" :key="index">
-      <span>
-        ({{ index > 0 ? index : '' }})
-        <img v-if="item && item.src && item.src.length > 0" :src="item.src" :alt="item.alt">
-        <component v-if="item.icon" :is="item.icon" />
-        <!-- <h3 v-if="item.header">{{ item.header }}</h3> -->
-        <!-- <p v-if="item.description">{{ item.description }}</p> -->
-
-        <component v-if="item.child" :is="item.child" />
-      </span>
+		<!-- {{ index > 0 ? `(${index})` : '' }} -->
+		<img v-if="item.src && item.src.length > 0" :src="item.src" :alt="item.alt">
+		<component v-if="item.child" :is="item.child" v-bind="item.itemProps" :index="index"/>
     </div>
   </div>
 </template>

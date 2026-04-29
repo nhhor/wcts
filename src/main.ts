@@ -1,6 +1,30 @@
-import "./assets/main.css";
-
+// App level Components
 import { createApp } from "vue";
 import App from "./App.vue";
 
-createApp(App).mount("#app");
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+// Styles
+import "./assets/main.css";
+import '@mdi/font/css/materialdesignicons.css'
+
+export const vuetify = createVuetify({
+  components,
+  directives,
+  // icons: {
+  //   defaultSet: 'mdi',
+  //   aliases,
+  //   sets: {
+  //     mdi,
+  //   },
+  // // },
+  // theme: {
+  //   defaultTheme: 'light',
+  // },
+});
+
+createApp(App).use(vuetify).mount('#app');
