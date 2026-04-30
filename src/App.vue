@@ -1,22 +1,30 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
+import HeaderComp from "./components/HeaderComp.vue";
+import MainComp from "./components/MainComp.vue";
+import FooterComp from "./components/FooterComp.vue";
 </script>
 
 <template>
   <header>
-    <div class="wrapper">
-      <HelloWorld msg="What Can They See?" />
-    </div>
+    <HeaderComp msg="What Can They See?" />
   </header>
-
   <main>
-    <TheWelcome />
+    <MainComp />
   </main>
-  <footer>-Footer-</footer>
+  <footer>
+    <FooterComp />
+  </footer>
 </template>
 
 <style scoped>
+
+#app {
+  width: 100vw;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* min-height: 100vh; */
+}
+
 header {
   line-height: 1.5;
 }
@@ -26,26 +34,11 @@ footer {
   padding: 2rem 0;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
 @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
   }
 }
 </style>

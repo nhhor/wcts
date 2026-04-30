@@ -66,7 +66,9 @@ div { aspect-ratio: 1 }
   --r: calc(.5*(1 + var(--rel))*var(--d)/tan(.5*var(--ba))); /* circle radius */
   display: grid;
   width: calc(2*var(--r) + var(--d)); /* container size */
-	background: silver
+  margin: 0 auto;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .05);
 }
 
 .container div {
