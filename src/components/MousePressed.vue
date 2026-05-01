@@ -32,8 +32,8 @@ const { pressed } = useMousePressed()
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
 }
 
 .itemTitle {
@@ -43,7 +43,7 @@ const { pressed } = useMousePressed()
 
 p {
   text-align: center;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 0.25rem;
   font-size: 0.9rem;
   color: #666;

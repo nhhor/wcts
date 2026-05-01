@@ -15,9 +15,9 @@ const { x, y } = useMouse()
 		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
       {{ index || 0 > 0 ? `(${index})` : '' }}
 			<span class="itemWrapper" v-bind="props">   
-        <v-icon v-if="true" color="error" icon="mdi-mouse-outline" />
+        <v-icon color="error" icon="mdi-mouse-outline" />
         <span class="itemTitle">{{ title }}</span>     
-        <p>[{{ x }}, {{ y }}]</p>
+        <p>[{{Math.round(x)}}, {{Math.round(y)}}]</p>
       </span>
     </v-tooltip> 
 </template>
@@ -30,8 +30,8 @@ const { x, y } = useMouse()
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
 }
 
 .itemTitle {
@@ -41,7 +41,7 @@ const { x, y } = useMouse()
 
 p {
   text-align: center;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 0.25rem;
   font-size: 0.9rem;
   color: #666;

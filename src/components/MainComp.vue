@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { VIcon, VTooltip } from "vuetify/components";
+import TheAllSeeingEye from "./TheAllSeeingEye.vue";
 import MousePosition from "./MousePosition.vue";
 import MousePressed from "./MousePressed.vue";
 
 const items = [
 	{
-		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_14.jpg', 
-		alt: 'fluffy, alert Amur leopard',
+		child: TheAllSeeingEye,
+		itemProps: {
+			title: 'The All-Seeing Eye',
+		}
 	}, 
 	{
 		child: MousePosition,
@@ -35,6 +37,18 @@ const items = [
 		alt: 'Amur leopard cub with very blue eyes'
 	}, 
 	{
+		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
+		alt: 'Amur leopard cub with very blue eyes'
+	}, 
+	{
+		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
+		alt: 'Amur leopard cub with very blue eyes'
+	}, 
+	{
+		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
+		alt: 'Amur leopard cub with very blue eyes'
+	}, 
+	{
 		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_30.jpg', 
 		alt: 'fluffy, alert Amur leopard'
 	}
@@ -57,29 +71,29 @@ let m = n_items - has_mid; /* how many are ON the circle */
 </template>
 
 <style scoped>
-div { aspect-ratio: 1 }
+	div { aspect-ratio: 1 }
 
-.container {
-  --d: 6.5em; /* image size */
+	.container {
+	--d: 6.5em; /* image size */
 	--rel: 1; /* how much extra space we want between images, 1 = 1 image size */
 	--ba: 1turn/var(--m);
-  --r: calc(.5*(1 + var(--rel))*var(--d)/tan(.5*var(--ba))); /* circle radius */
-  display: grid;
-  width: calc(2*var(--r) + var(--d)); /* container size */
-  margin: 0 auto;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, .05);
-}
+	--r: calc(.5*(1 + var(--rel))*var(--d)/tan(.5*var(--ba))); /* circle radius */
+	display: grid;
+	width: calc(2*var(--r) + var(--d)); /* container size */
+	margin: 0 auto;
+	border-radius: 50%;
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 255, 255, .1) 60%, rgba(0, 0, 0, 0) 70%);
+	}
 
 .container div {
-	grid-area: 1/ 1;
-  place-self: center;
-	width: var(--d);
-  --ca: calc(var(--i)*var(--ba));
-  transform: 
-    rotate(var(--ca)) 
-    translate(var(--r))
-    rotate(calc(-1*var(--ca)))
+grid-area: 1/ 1;
+place-self: center;
+width: var(--d);
+--ca: calc(var(--i)*var(--ba));
+transform: 
+rotate(var(--ca)) 
+translate(var(--r))
+rotate(calc(-1*var(--ca)))
 }
 
 img { max-width: 100% }

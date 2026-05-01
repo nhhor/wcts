@@ -3,23 +3,23 @@
 
 
 <template>
-    <h3 class="greetings">Footer</h3>
+  <div class="footer">
+    <h3>🚧 Work in Progress 🏗️</h3>
+  </div>
 </template>
 
 <style scoped>
 h3{
   font-weight: 500;
   font-size: 1.8rem;
-  position: relative;
-  top: -10px;
 }
 
-.greetings h3 {
+.footer.h3 {
   text-align: center;
 }
 
 @media (min-width: 1024px) {
-  .greetings h3 {
+  .footer.h3 {
     text-align: left;
   }
 }

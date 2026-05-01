@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
-    <h3>subheader</h3>
+    <h3>Vue project displaying many of the things browsers can track from users.</h3>
   </div>
 </template>
 
