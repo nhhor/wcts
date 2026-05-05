@@ -2,6 +2,7 @@
 import TheAllSeeingEye from "./TheAllSeeingEye.vue";
 import MousePosition from "./MousePosition.vue";
 import MousePressed from "./MousePressed.vue";
+import Permissions from "./Permissions.vue";
 
 const items = [
 	{
@@ -25,20 +26,16 @@ const items = [
 		}
 	}, 
 	{
-		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_16.jpg', 
-		alt: 'fluffy Amur leopard on a tree branch'
+		child: Permissions,
+		itemProps: {
+			title: 'Permissions',
+			tooltip: 'They can see additional permissions... (CLICK MENU)'
+		}
 	}, 
+
 	{
 		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_18.jpg', 
 		alt: 'Amur leopard romance'
-	}, 
-	{
-		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
-		alt: 'Amur leopard cub with very blue eyes'
-	}, 
-	{
-		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
-		alt: 'Amur leopard cub with very blue eyes'
 	}, 
 	{
 		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
@@ -63,7 +60,6 @@ let m = n_items - has_mid; /* how many are ON the circle */
 <template>
   <div class="container" :style="{ '--m': m }">
     <div v-for="(item, index) in items" :style="index - has_mid >= 0 ? `--i: ${index}` : null" :key="index">
-		<!-- {{ index > 0 ? `(${index})` : '' }} -->
 		<img v-if="item.src && item.src.length > 0" :src="item.src" :alt="item.alt">
 		<component v-if="item.child" :is="item.child" v-bind="item.itemProps" :index="index"/>
     </div>
