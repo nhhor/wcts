@@ -3,6 +3,7 @@ import TheAllSeeingEye from "./TheAllSeeingEye.vue";
 import MousePosition from "./MousePosition.vue";
 import MousePressed from "./MousePressed.vue";
 import Permissions from "./Permissions.vue";
+import Devices from "./Devices.vue";
 
 const items = [
 	{
@@ -32,10 +33,12 @@ const items = [
 			tooltip: 'They can see additional permissions... (CLICK MENU)'
 		}
 	}, 
-
 	{
-		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_18.jpg', 
-		alt: 'Amur leopard romance'
+		child: Devices,
+		itemProps: {
+			title: 'Devices',
+			tooltip: 'They can see what devices you have connected...'
+		}
 	}, 
 	{
 		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
