@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { usePermission } from '@vueuse/core'
+import {computed} from 'vue'
 
 const {title, tooltip, index} = defineProps({
   index: Number,
@@ -28,6 +29,18 @@ const permissions =
   { key: "localFonts", obj: usePermission('local-fonts') },
 ]
 
+const grantedCount = computed(() => (permissions.map(p => p.obj.value).join(',').match(new RegExp('granted', "g")) || []).length);
+
+// TEMP: for testing purposes, you can set all permissions to 'granted' like this:
+// const grantedCount = computed(() => permissions.filter(element => {
+//   if (element.obj.value === 'granted') {
+//     console.log(`💚 ${element.key} is granted!`);
+//     return true;
+//   }
+//   console.log(`💔 ${element.key} ain't granted!`);
+//   return false;
+// }).length);
+
 </script>
 
 <template>
@@ -38,7 +51,8 @@ const permissions =
           <template v-slot:activator="{ props: menu }">
             <span class="itemWrapper" v-bind="menu">
               <v-icon v-bind="menu" color="info" icon="mdi-menu" size="x-large"/>
-              <span class="itemTitle">{{ title }}</span>     
+              <span v-if="permissions.length > 0" class="itemTitle">{{ title }} ({{ grantedCount }}/{{ permissions.length }})</span>
+              <span v-else class="itemTitle">{{ title }}x</span>
             </span>
           </template>
           <v-list>
@@ -63,6 +77,7 @@ const permissions =
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.5);

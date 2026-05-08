@@ -37,13 +37,13 @@ const {
                 <v-icon size="small" color="info" icon="mdi-camera" v-if="device.kind === 'videoinput'"/>
                 <v-icon size="small" color="info" icon="mdi-microphone" v-else-if="device.kind === 'audioinput'"/>
                 <v-icon size="small" color="info" icon="mdi-speaker" v-else-if="device.kind === 'audiooutput'"/>
-                [{{ device.deviceId || index + 1 }}] {{ device.kind }}
+                [{{ index + 1 }}] {{ device.kind }}
               </v-list-item-title>
               <ul v-if="device.deviceId || device.label || device.groupId">
                 <li>
-                  <span v-if="device.deviceId" class="prompt">{...{{ device.deviceId.substring(device.deviceId.length - 5) }}}: </span>
-                  <span v-if="device.label" class="prompt">{{ device.label }}y </span>
-                  <span v-if="device.groupId" class="prompt">{{ device.groupId }}z </span>
+                  <span v-if="device.deviceId">{...{{ device.deviceId.substring(device.deviceId.length - 5) }}}: </span>
+                  <span v-if="device.label">{{ device.label }}y </span>
+                  <span v-if="device.groupId">{{ device.groupId }}z </span>
                 </li>
               </ul>
             </v-list-item>
@@ -59,6 +59,7 @@ const {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.5);
