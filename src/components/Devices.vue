@@ -21,18 +21,34 @@ const {
 <template>
 		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
       {{ index || 0 > 0 ? `(${index})` : '' }}
-			<span class="itemWrapper" v-bind="props">   
-        <v-icon color="error" icon="mdi-devices" />
-        <span v-if="devices.length > 0" class="itemTitle">{{ title }} ({{ devices.length }})</span>
-        <span v-else class="itemTitle">{{ title }}</span>
-        <p v-if="devices.length == 0">No devices found.</p>
-        <ul v-if="devices.length > 0">
-          <li v-for="(device, index) in devices" :key="index">
-            <v-icon size="small" color="info" icon="mdi-camera" v-if="device.kind === 'videoinput'"/>
-            <v-icon size="small" color="info" icon="mdi-microphone" v-else-if="device.kind === 'audioinput'"/>
-            <v-icon size="small" color="info" icon="mdi-speaker" v-else-if="device.kind === 'audiooutput'"/>
-            [{{ device.deviceId || index+1 }}] {{ device.kind }}</li>
-        </ul>
+			<span class="itemWrapper" v-bind="props">
+        <v-menu>
+          <template v-slot:activator="{ props: menu }">
+            <span class="itemWrapper" v-bind="menu">
+              <v-icon color="error" icon="mdi-devices" size="x-large"/>
+              <span v-if="devices.length > 0" class="itemTitle">{{ title }} ({{ devices.length }})</span>
+              <span v-else class="itemTitle">{{ title }}</span>
+              <p v-if="devices.length == 0">No devices found.</p>
+            </span>
+          </template>
+          <v-list v-if="devices.length > 0">
+            <v-list-item v-for="(device, index) in devices" :key="index" :value="index">
+              <v-list-item-title>
+                <v-icon size="small" color="info" icon="mdi-camera" v-if="device.kind === 'videoinput'"/>
+                <v-icon size="small" color="info" icon="mdi-microphone" v-else-if="device.kind === 'audioinput'"/>
+                <v-icon size="small" color="info" icon="mdi-speaker" v-else-if="device.kind === 'audiooutput'"/>
+                [{{ device.deviceId || index + 1 }}] {{ device.kind }}
+              </v-list-item-title>
+              <ul v-if="device.deviceId || device.label || device.groupId">
+                <li>
+                  <span v-if="device.deviceId" class="prompt">{...{{ device.deviceId.substring(device.deviceId.length - 5) }}}: </span>
+                  <span v-if="device.label" class="prompt">{{ device.label }}y </span>
+                  <span v-if="device.groupId" class="prompt">{{ device.groupId }}z </span>
+                </li>
+              </ul>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </span>
     </v-tooltip> 
 </template>

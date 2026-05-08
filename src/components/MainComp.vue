@@ -30,22 +30,22 @@ const items = [
 		child: Permissions,
 		itemProps: {
 			title: 'Permissions',
-			tooltip: 'They can see additional permissions... (CLICK MENU)'
+			tooltip: 'They can see additional permissions... (CLICK ICON)'
 		}
 	}, 
 	{
 		child: Devices,
 		itemProps: {
 			title: 'Devices',
-			tooltip: 'They can see what devices you have connected...'
+			tooltip: 'They can see what devices you have connected... (CLICK ICON)'
 		}
 	}, 
 	{
-		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
+		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_21.jpg', 
 		alt: 'Amur leopard cub with very blue eyes'
 	}, 
 	{
-		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_24.jpg', 
+		src: 'https://assets.codepen.io/2017/17_05_a_amur_leopard_27.jpg', 
 		alt: 'Amur leopard cub with very blue eyes'
 	}, 
 	{

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { usePermission } from '@vueuse/core'
-import { VIcon, VTooltip } from "vuetify/components";
 
 const {title, tooltip, index} = defineProps({
   index: Number,
@@ -10,7 +8,6 @@ const {title, tooltip, index} = defineProps({
 })
 
 const permissions = 
-// computed(() => 
 [
   { key: "accelerometer", obj: usePermission('accelerometer') },
   { key: "accessibilityEvents", obj: usePermission('accessibility-events') },
@@ -30,7 +27,6 @@ const permissions =
   { key: "speaker", obj: usePermission('speaker') },
   { key: "localFonts", obj: usePermission('local-fonts') },
 ]
-// );
 
 </script>
 
@@ -40,8 +36,10 @@ const permissions =
       <span class="itemWrapper" v-bind="tooltip">
         <v-menu>
           <template v-slot:activator="{ props: menu }">
-            <v-icon v-bind="menu" color="info" icon="mdi-menu" size="x-large"/>
-            <span class="itemTitle">{{ title }}</span>     
+            <span class="itemWrapper" v-bind="menu">
+              <v-icon v-bind="menu" color="info" icon="mdi-menu" size="x-large"/>
+              <span class="itemTitle">{{ title }}</span>     
+            </span>
           </template>
           <v-list>
             <v-list-item v-for="(permission, index) in permissions" :key="index" :value="index">
