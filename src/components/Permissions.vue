@@ -44,8 +44,8 @@ const grantedCount = computed(() => (permissions.map(p => p.obj.value).join(',')
 </script>
 
 <template>
+  {{ index || 0 > 0 ? `(${index})` : '' }}
     <v-tooltip :text="tooltip" v-slot:activator="{ props: tooltip }" interactive>
-      {{ index || 0 > 0 ? `(${index})` : '' }}
       <span class="itemWrapper" v-bind="tooltip">
         <v-menu>
           <template v-slot:activator="{ props: menu }">

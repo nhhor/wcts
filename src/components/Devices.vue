@@ -40,11 +40,11 @@ const {
                 [{{ index + 1 }}] {{ device.kind }}
               </v-list-item-title>
               <ul v-if="device.deviceId || device.label || device.groupId">
-                <li>
-                  <span v-if="device.deviceId">{...{{ device.deviceId.substring(device.deviceId.length - 5) }}}: </span>
-                  <span v-if="device.label">{{ device.label }}y </span>
-                  <span v-if="device.groupId">{{ device.groupId }}z </span>
-                </li>
+                <li>{
+                  <span v-if="device.deviceId">id: ...{{ device.deviceId.substring(device.deviceId.length - 5) }}, </span>
+                  <span v-if="device.label">label: {{ device.label }}, </span>
+                  <span v-if="device.groupId">groupId: ...{{ device.groupId.substring(device.groupId.length - 5) }}</span>
+                }</li>
               </ul>
             </v-list-item>
           </v-list>

@@ -5,6 +5,7 @@
 <template>
   <div class="footer">
     <h3>🚧 Work in Progress 🏗️</h3>
+    #glassHouses
   </div>
 </template>
 

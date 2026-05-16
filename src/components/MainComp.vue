@@ -4,6 +4,7 @@ import MousePosition from "./MousePosition.vue";
 import MousePressed from "./MousePressed.vue";
 import Permissions from "./Permissions.vue";
 import Devices from "./Devices.vue";
+import Visits from "./Visits.vue";
 
 const items = [
 	{
@@ -38,6 +39,13 @@ const items = [
 		itemProps: {
 			title: 'Devices',
 			tooltip: 'They can see what devices you have connected... (CLICK ICON)'
+		}
+	}, 
+	{
+		child: Visits,
+		itemProps: {
+			title: 'Visits',
+			tooltip: 'They can see all the times you have visited...'
 		}
 	}, 
 	{
