@@ -1,6 +1,4 @@
-<script setup lang="ts">
-</script>
-
+<script setup lang="ts"></script>
 
 <template>
   <div class="footer">
@@ -10,7 +8,7 @@
 </template>
 
 <style scoped>
-h3{
+h3 {
   font-weight: 500;
   font-size: 1.8rem;
 }

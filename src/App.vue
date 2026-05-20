@@ -17,7 +17,6 @@ import FooterComp from "./components/FooterComp.vue";
 </template>
 
 <style scoped>
-
 #app {
   width: 100vw;
   /* display: flex; */

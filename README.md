@@ -3,24 +3,26 @@
 This is a personal project meant to educate users on _some_ of the many datapoints any website could gather from its users. Hoping to encourage people to take a more proactive apporach to thier data security.
 
 ---
+
 ### Deployed to https://nhhor.github.io/wcts/
 
 ### Built using:
+
 - [Vue](https://vuejs.org/)
 - [Vite](https://vite.dev/)
 - [VueUse](https://vueuse.org/guide/components.html)
 
+### Terminal Commands:
+
 - `npm run dev`
 - `npm run deploy`
-    - `npm run build` _(deploy includes build step.)_
+  - `npm run build` _(deploy includes build step.)_
 
----
-
-### Scratchpad of ideas to come:
+## Idea Scratchpad:
 
 - UserAgent data
 - IP Address – Used to approximate the user’s location and track their internet activity.
-    - Geolocation (city, region, country)
+  - Geolocation (city, region, country)
 - Referring URL and clickstream data
 - Browser Type & Version – Identifies the software and version being used (e.g., Chrome 120, Firefox 115).
 - Operating System – Reveals the user’s device OS (e.g., Windows 11, macOS Ventura, Android 13).

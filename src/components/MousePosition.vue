@@ -1,27 +1,26 @@
 <script setup lang="ts">
-import { useMouse } from '@vueuse/core'
+import { useMouse } from "@vueuse/core";
 import { VIcon, VTooltip } from "vuetify/components";
 
-const {title, tooltip, index} = defineProps({
+const { title, tooltip, index } = defineProps({
   index: Number,
   title: String,
-  tooltip: String
-})
-const { x, y } = useMouse()
-
+  tooltip: String,
+});
+const { x, y } = useMouse();
 </script>
 
 <template>
-		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
-      {{ index || 0 > 0 ? `(${index})` : '' }}
-			<span class="itemWrapper" v-bind="props">   
-        <v-icon color="error" icon="" />
-        <v-icon v-if="y == 0" color="success" icon="mdi-mouse-outline" />
-        <v-icon v-else color="error" icon="mdi-mouse-outline" />
-        <span class="itemTitle">{{ title }}</span>     
-        <p>[{{Math.round(x)}}, {{Math.round(y)}}]</p>
-      </span>
-    </v-tooltip> 
+  <v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
+    {{ index || 0 > 0 ? `(${index})` : "" }}
+    <span class="itemWrapper" v-bind="props">
+      <v-icon color="error" icon="" />
+      <v-icon v-if="y == 0" color="success" icon="mdi-mouse-outline" />
+      <v-icon v-else color="error" icon="mdi-mouse-outline" />
+      <span class="itemTitle">{{ title }}</span>
+      <p>[{{ Math.round(x) }}, {{ Math.round(y) }}]</p>
+    </span>
+  </v-tooltip>
 </template>
 
 <style scoped>
@@ -37,8 +36,8 @@ const { x, y } = useMouse()
 }
 
 .itemTitle {
- text-align: center;
- font-weight: 700;
+  text-align: center;
+  font-weight: 700;
 }
 
 p {

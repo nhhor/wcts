@@ -1,36 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { onKeyUp } from '@vueuse/core'
+import { ref } from "vue";
+import { onKeyUp } from "@vueuse/core";
 import { VIcon, VTooltip } from "vuetify/components";
 
-const {title, tooltip, index} = defineProps({
+const { title, tooltip, index } = defineProps({
   index: Number,
   title: String,
-  tooltip: String
-})
+  tooltip: String,
+});
 
-const pressedKey = ref([''])
+const pressedKey = ref([""]);
 
 onKeyUp(true, (e) => {
-    if (pressedKey.value.length > 5) {
-      pressedKey.value.splice(0, 2)
-      pressedKey.value.unshift('...')
-    }
-    pressedKey.value = [...pressedKey.value, e.key]
-})
-
+  if (pressedKey.value.length > 5) {
+    pressedKey.value.splice(0, 2);
+    pressedKey.value.unshift("...");
+  }
+  pressedKey.value = [...pressedKey.value, e.key];
+});
 </script>
 
 <template>
-		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
-      {{ index || 0 > 0 ? `(${index})` : '' }}
-			<span class="itemWrapper" v-bind="props">   
-        <v-icon v-if="pressedKey.join('') === ''" color="success" icon="mdi-keyboard" size="x-large"/>
-        <v-icon v-else color="error" icon="mdi-keyboard" size="x-large"/>
-        <span class="itemTitle">{{ title }}</span>     
-        <p>[{{ pressedKey.join('') }}]</p>
-      </span>
-    </v-tooltip> 
+  <v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
+    {{ index || 0 > 0 ? `(${index})` : "" }}
+    <span class="itemWrapper" v-bind="props">
+      <v-icon
+        v-if="pressedKey.join('') === ''"
+        color="success"
+        icon="mdi-keyboard"
+        size="x-large"
+      />
+      <v-icon v-else color="error" icon="mdi-keyboard" size="x-large" />
+      <span class="itemTitle">{{ title }}</span>
+      <p>[{{ pressedKey.join("") }}]</p>
+    </span>
+  </v-tooltip>
 </template>
 
 <style scoped>
@@ -46,8 +50,8 @@ onKeyUp(true, (e) => {
 }
 
 .itemTitle {
- text-align: center;
- font-weight: 700;
+  text-align: center;
+  font-weight: 700;
 }
 
 p {

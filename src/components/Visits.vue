@@ -1,58 +1,75 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useStorage } from '@vueuse/core'
+import { computed } from "vue";
+import { useStorage } from "@vueuse/core";
 import { VIcon, VTooltip } from "vuetify/components";
 
-const {title, tooltip, index} = defineProps({
+const { title, tooltip, index } = defineProps({
   index: Number,
   title: String,
-  tooltip: String
-})
+  tooltip: String,
+});
 
-const visitData = useStorage<{ visitTimes: string[] }>('visitData', { visitTimes: [] })
+const visitData = useStorage<{ visitTimes: string[] }>("visitData", {
+  visitTimes: [],
+});
 
 const visitTimes = computed<string[]>({
   get: () => visitData.value.visitTimes,
   set: (value: string[]) => {
-    visitData.value.visitTimes = value
-  }
-})
+    visitData.value.visitTimes = value;
+  },
+});
 
 const bumpVisitOnMount = () => {
-  visitTimes.value.push(new Date().toISOString())
-}
+  visitTimes.value.push(new Date().toISOString());
+};
 </script>
 
 <template>
-    {{ bumpVisitOnMount() }}
-    {{ index || 0 > 0 ? `(${index})` : '' }}
-    <v-tooltip :text="tooltip" v-slot:activator="{ props: tooltip }" interactive>
-      <span v-bind="tooltip">
-        <v-menu>
-          <template v-slot:activator="{ props: menu }">
-            <span class="itemWrapper">
-              <v-icon v-if="visitTimes.length > 1" icon="mdi-counter" size="x-large" color="error" />
-              <v-icon v-else icon="mdi-counter" size="x-large" color="success" />
-              <span class="itemTitle">{{ title }} ({{ visitTimes.length }})</span>
-              <v-icon v-bind="menu" color="info" icon="mdi-information-outline" size="small"/>
-            </span>
+  {{ bumpVisitOnMount() }}
+  {{ index || 0 > 0 ? `(${index})` : "" }}
+  <v-tooltip :text="tooltip" v-slot:activator="{ props: tooltip }" interactive>
+    <span v-bind="tooltip">
+      <v-menu>
+        <template v-slot:activator="{ props: menu }">
+          <span class="itemWrapper">
+            <v-icon
+              v-if="visitTimes.length > 1"
+              icon="mdi-counter"
+              size="x-large"
+              color="error"
+            />
+            <v-icon v-else icon="mdi-counter" size="x-large" color="success" />
+            <span class="itemTitle">{{ title }} ({{ visitTimes.length }})</span>
+            <v-icon
+              v-bind="menu"
+              color="info"
+              icon="mdi-information-outline"
+              size="small"
+            />
+          </span>
+        </template>
+        <v-list>
+          <template
+            v-for="(visit, index) in visitTimes"
+            :key="index"
+            :value="index"
+          >
+            <v-list-item v-if="index < 4 || index >= visitTimes.length - 5">
+              ({{ index + 1 }})
+              {{
+                new Date(visit).toLocaleString([], { timeZoneName: "short" })
+              }}
+            </v-list-item>
+            <v-list-item v-else-if="index === 5">
+              <pre>   ...</pre>
+            </v-list-item>
           </template>
-          <v-list>
-            <template v-for="(visit, index) in visitTimes" :key="index" :value="index">
-              <v-list-item v-if="index < 4 || index >= visitTimes.length - 5">
-                  ({{ index + 1 }}) {{new Date(visit).toLocaleString([], { timeZoneName: "short" })}}
-              </v-list-item>
-              <v-list-item v-else-if="index === 5">
-                  <pre>   ...</pre>
-              </v-list-item>
-            </template>
-          </v-list>
-        </v-menu>
-      </span>
+        </v-list>
+      </v-menu>
+    </span>
   </v-tooltip>
 </template>
-
-
 
 <style scoped>
 .itemWrapper {
@@ -67,8 +84,8 @@ const bumpVisitOnMount = () => {
 }
 
 .itemTitle {
- text-align: center;
- font-weight: 700;
+  text-align: center;
+  font-weight: 700;
 }
 
 p {

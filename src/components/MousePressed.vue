@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { useMousePressed } from '@vueuse/core'
+import { useMousePressed } from "@vueuse/core";
 import { VIcon, VTooltip } from "vuetify/components";
 
-const {title, tooltip, index} = defineProps({
+const { title, tooltip, index } = defineProps({
   index: Number,
   title: String,
-  tooltip: String
-})
+  tooltip: String,
+});
 
-const { pressed } = useMousePressed()
+const { pressed } = useMousePressed();
 </script>
 
 <template>
-		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
-      {{ index || 0 > 0 ? `(${index})` : '' }}
-			<span class="itemWrapper" v-bind="props">   
-        <v-icon v-if="pressed" color="error" icon="mdi-mouse-left-click" />
-        <v-icon v-else color="success" icon="mdi-mouse" />
-        <span class="itemTitle">{{ title }}</span>     
-        <p>[{{ pressed }}]</p>
-      </span>
-    </v-tooltip> 
+  <v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
+    {{ index || 0 > 0 ? `(${index})` : "" }}
+    <span class="itemWrapper" v-bind="props">
+      <v-icon v-if="pressed" color="error" icon="mdi-mouse-left-click" />
+      <v-icon v-else color="success" icon="mdi-mouse" />
+      <span class="itemTitle">{{ title }}</span>
+      <p>[{{ pressed }}]</p>
+    </span>
+  </v-tooltip>
 </template>
 
 <style scoped>
@@ -36,8 +36,8 @@ const { pressed } = useMousePressed()
 }
 
 .itemTitle {
- text-align: center;
- font-weight: 700;
+  text-align: center;
+  font-weight: 700;
 }
 
 p {
