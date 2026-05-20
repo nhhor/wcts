@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { onKeyUp } from '@vueuse/core'
 import { VIcon, VTooltip } from "vuetify/components";
 
@@ -8,12 +9,14 @@ const {title, tooltip, index} = defineProps({
   tooltip: String
 })
 
+const pressedKey = ref([''])
 
-
-let pressedKey = ''
 onKeyUp(true, (e) => {
-  console.log(`Key pressed: ${e.key}`)
-  pressedKey = e.key
+    if (pressedKey.value.length > 5) {
+      pressedKey.value.splice(0, 2)
+      pressedKey.value.unshift('...')
+    }
+    pressedKey.value = [...pressedKey.value, e.key]
 })
 
 </script>
@@ -22,10 +25,10 @@ onKeyUp(true, (e) => {
 		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
       {{ index || 0 > 0 ? `(${index})` : '' }}
 			<span class="itemWrapper" v-bind="props">   
-        <v-icon v-if="pressedKey === ''" color="success" icon="mdi-keyboard" size="x-large"/>
+        <v-icon v-if="pressedKey.join('') === ''" color="success" icon="mdi-keyboard" size="x-large"/>
         <v-icon v-else color="error" icon="mdi-keyboard" size="x-large"/>
         <span class="itemTitle">{{ title }}</span>     
-        <p>[{{ pressedKey }}]</p>
+        <p>[{{ pressedKey.join('') }}]</p>
       </span>
     </v-tooltip> 
 </template>
