@@ -9,13 +9,8 @@ const {title, tooltip, index} = defineProps({
   tooltip: String
 })
 
-const visitData = useStorage<{ visitCount: number; visitTimes: string[] }>('visitData', { visitCount: 0, visitTimes: [] })
-const visitCount = computed({
-  get: () => visitData.value.visitCount,
-  set: (value: number) => {
-    visitData.value.visitCount = value
-  }
-})
+const visitData = useStorage<{ visitTimes: string[] }>('visitData', { visitTimes: [] })
+
 const visitTimes = computed<string[]>({
   get: () => visitData.value.visitTimes,
   set: (value: string[]) => {
@@ -23,61 +18,34 @@ const visitTimes = computed<string[]>({
   }
 })
 
-const addVisitTime = () => {
+const bumpVisitOnMount = () => {
   visitTimes.value.push(new Date().toISOString())
 }
-
-// Increment visit count and add current visit time:
-visitCount.value += 1
-addVisitTime()
-//
-
 </script>
 
-<!-- <template>
-  {{ index || 0 > 0 ? `(${index})` : '' }}
-  <v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
-
-    <span class="itemWrapper" v-bind="props">   
-      <v-icon v-if="visitCount > 1" color="error" icon="mdi-counter" />
-      <v-icon v-else color="success" icon="mdi-counter" />
-      <span class="itemTitle">{{ title }} ({{ visitCount }})</span>     
-      <v-menu v-if="visitTimes.length > 1">
-        <template v-slot:activator="{ props: menu }">
-          <span v-bind="menu">
-            <v-icon v-bind="menu" color="info" icon="mdi-information-outline" size="x-small"/>
-          </span>
-        </template>
-        <v-list>
-          <v-list-item v-for="(visit, index) in visitTimes" :key="index" :value="index">
-              ({{ index + 1 }}) {{new Date(visit).toLocaleString([], { timeZoneName: "short" })}}
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </span>
-    
-  </v-tooltip> 
-</template> -->
-
-
 <template>
+    {{ bumpVisitOnMount() }}
     {{ index || 0 > 0 ? `(${index})` : '' }}
     <v-tooltip :text="tooltip" v-slot:activator="{ props: tooltip }" interactive>
-      <span class="itemWrapper" v-bind="tooltip">
+      <span v-bind="tooltip">
         <v-menu>
           <template v-slot:activator="{ props: menu }">
-            <span class="itemWrapper" v-bind="menu">
-              <v-icon v-if="visitCount > 1" v-bind="menu" icon="mdi-counter" size="x-large" color="error" />
-              <v-icon v-else v-bind="menu" icon="mdi-counter" size="x-large" color="success" />
-              <span class="itemTitle">{{ title }} ({{ visitCount }})</span>
-              <v-icon color="info" icon="mdi-information-outline" size="x-small"/>
-
+            <span class="itemWrapper">
+              <v-icon v-if="visitTimes.length > 1" icon="mdi-counter" size="x-large" color="error" />
+              <v-icon v-else icon="mdi-counter" size="x-large" color="success" />
+              <span class="itemTitle">{{ title }} ({{ visitTimes.length }})</span>
+              <v-icon v-bind="menu" color="info" icon="mdi-information-outline" size="small"/>
             </span>
           </template>
           <v-list>
-            <v-list-item v-for="(visit, index) in visitTimes" :key="index" :value="index">
-                ({{ index + 1 }}) {{new Date(visit).toLocaleString([], { timeZoneName: "short" })}}
-            </v-list-item>
+            <template v-for="(visit, index) in visitTimes" :key="index" :value="index">
+              <v-list-item v-if="index < 4 || index >= visitTimes.length - 5">
+                  ({{ index + 1 }}) {{new Date(visit).toLocaleString([], { timeZoneName: "short" })}}
+              </v-list-item>
+              <v-list-item v-else-if="index === 5">
+                  <pre>   ...</pre>
+              </v-list-item>
+            </template>
           </v-list>
         </v-menu>
       </span>

@@ -31,16 +31,6 @@ const permissions =
 
 const grantedCount = computed(() => (permissions.map(p => p.obj.value).join(',').match(new RegExp('granted', "g")) || []).length);
 
-// TEMP: for testing purposes, you can set all permissions to 'granted' like this:
-// const grantedCount = computed(() => permissions.filter(element => {
-//   if (element.obj.value === 'granted') {
-//     console.log(`💚 ${element.key} is granted!`);
-//     return true;
-//   }
-//   console.log(`💔 ${element.key} ain't granted!`);
-//   return false;
-// }).length);
-
 </script>
 
 <template>

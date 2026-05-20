@@ -2,6 +2,7 @@
 import TheAllSeeingEye from "./TheAllSeeingEye.vue";
 import MousePosition from "./MousePosition.vue";
 import MousePressed from "./MousePressed.vue";
+import KeyStroke from "./KeyStroke.vue";
 import Permissions from "./Permissions.vue";
 import Devices from "./Devices.vue";
 import Visits from "./Visits.vue";
@@ -25,6 +26,13 @@ const items = [
 		itemProps: {
 			title: 'Mouse Pressed',
 			tooltip: 'They can see if your mouse is pressed...'
+		}
+	}, 
+	{
+		child: KeyStroke,
+		itemProps: {
+			title: 'Key Stroke',
+			tooltip: 'They can see what keys you are pressing...'
 		}
 	}, 
 	{

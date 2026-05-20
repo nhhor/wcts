@@ -15,7 +15,9 @@ const { x, y } = useMouse()
 		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
       {{ index || 0 > 0 ? `(${index})` : '' }}
 			<span class="itemWrapper" v-bind="props">   
-        <v-icon color="error" icon="mdi-mouse-outline" />
+        <v-icon color="error" icon="" />
+        <v-icon v-if="y == 0" color="success" icon="mdi-mouse-outline" />
+        <v-icon v-else color="error" icon="mdi-mouse-outline" />
         <span class="itemTitle">{{ title }}</span>     
         <p>[{{Math.round(x)}}, {{Math.round(y)}}]</p>
       </span>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMousePressed } from '@vueuse/core'
+import { onKeyUp } from '@vueuse/core'
 import { VIcon, VTooltip } from "vuetify/components";
 
 const {title, tooltip, index} = defineProps({
@@ -8,17 +8,24 @@ const {title, tooltip, index} = defineProps({
   tooltip: String
 })
 
-const { pressed } = useMousePressed()
+
+
+let pressedKey = ''
+onKeyUp(true, (e) => {
+  console.log(`Key pressed: ${e.key}`)
+  pressedKey = e.key
+})
+
 </script>
 
 <template>
 		<v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
       {{ index || 0 > 0 ? `(${index})` : '' }}
 			<span class="itemWrapper" v-bind="props">   
-        <v-icon v-if="pressed" color="error" icon="mdi-mouse-left-click" />
-        <v-icon v-else color="success" icon="mdi-mouse" />
+        <v-icon v-if="pressedKey === ''" color="success" icon="mdi-keyboard" size="x-large"/>
+        <v-icon v-else color="error" icon="mdi-keyboard" size="x-large"/>
         <span class="itemTitle">{{ title }}</span>     
-        <p>[{{ pressed }}]</p>
+        <p>[{{ pressedKey }}]</p>
       </span>
     </v-tooltip> 
 </template>
