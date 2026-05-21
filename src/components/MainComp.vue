@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import { shallowRef, markRaw, useTemplateRef, ref } from "vue";
+import { createCssTransition } from "vuetify/util/transitions";
+import {
+  useInterval,
+  TransitionPresets,
+  useTransition,
+  useAnimate,
+} from "@vueuse/core";
 import TheAllSeeingEye from "./TheAllSeeingEye.vue";
 import MousePosition from "./MousePosition.vue";
 import MousePressed from "./MousePressed.vue";
@@ -7,43 +15,43 @@ import Permissions from "./Permissions.vue";
 import Devices from "./Devices.vue";
 import Visits from "./Visits.vue";
 
-const items = [
+const items = shallowRef([
   {
-    child: TheAllSeeingEye,
+    child: markRaw(TheAllSeeingEye),
     itemProps: {
       title: "The All-Seeing Eye",
     },
   },
   {
-    child: MousePosition,
+    child: markRaw(MousePosition),
     itemProps: {
       title: "Mouse Position",
       tooltip: "They can see where your mouse is...",
     },
   },
   {
-    child: MousePressed,
+    child: markRaw(MousePressed),
     itemProps: {
       title: "Mouse Pressed",
       tooltip: "They can see if your mouse is pressed...",
     },
   },
   {
-    child: KeyStrokes,
+    child: markRaw(KeyStrokes),
     itemProps: {
       title: "Key Strokes",
       tooltip: "They can see what keys you are pressing...",
     },
   },
   {
-    child: Permissions,
+    child: markRaw(Permissions),
     itemProps: {
       title: "Permissions",
       tooltip: "They can see additional permissions... (CLICK ℹ FOR MORE INFO)",
     },
   },
   {
-    child: Devices,
+    child: markRaw(Devices),
     itemProps: {
       title: "Devices",
       tooltip:
@@ -51,7 +59,7 @@ const items = [
     },
   },
   {
-    child: Visits,
+    child: markRaw(Visits),
     itemProps: {
       title: "Visits",
       tooltip:
@@ -70,15 +78,34 @@ const items = [
     src: "https://assets.codepen.io/2017/17_05_a_amur_leopard_30.jpg",
     alt: "fluffy, alert Amur leopard",
   },
-];
+]);
 
-let n_items = items.length;
+const cycleItems = (arr: any[]) => {
+  const firstElement = arr.splice(0, 1)[0];
+  const lastElement = arr.splice(-1)[0];
+  arr.unshift(lastElement);
+  arr.unshift(firstElement);
+};
+
+useInterval(9999, {
+  callback: () => {
+    cycleItems(items.value);
+    items.value = [...items.value];
+  },
+});
+
+let n_items = items.value.length;
 let has_mid = 1; /* 0 if there's no item in the middle, 1 otherwise */
 let m = n_items - has_mid; /* how many are ON the circle */
 </script>
 
 <template>
-  <div class="container" :style="{ '--m': m }">
+  <TransitionGroup
+    tag="div"
+    name="fade"
+    class="container"
+    :style="{ '--m': m }"
+  >
     <div
       v-for="(item, index) in items"
       :style="index - has_mid >= 0 ? `--i: ${index}` : null"
@@ -96,7 +123,7 @@ let m = n_items - has_mid; /* how many are ON the circle */
         :index="index"
       />
     </div>
-  </div>
+  </TransitionGroup>
 </template>
 
 <style scoped>
@@ -133,5 +160,20 @@ div {
 
 img {
   max-width: 100%;
+  border-radius: 50%;
+}
+
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.66s cubic-bezier(0.66, -3, 0.265, 1.55);
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) translate(30px, 0);
+}
+.fade-leave-active {
+  position: absolute;
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { useStorage } from "@vueuse/core";
 import { VIcon, VTooltip } from "vuetify/components";
 
@@ -20,13 +20,12 @@ const visitTimes = computed<string[]>({
   },
 });
 
-const bumpVisitOnMount = () => {
+onBeforeMount(() => {
   visitTimes.value.push(new Date().toISOString());
-};
+});
 </script>
 
 <template>
-  {{ bumpVisitOnMount() }}
   {{ index || 0 > 0 ? `(${index})` : "" }}
   <span class="itemWrapper">
     <v-tooltip class="tooltip" interactive :text="tooltip">
