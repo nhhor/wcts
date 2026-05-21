@@ -41,37 +41,59 @@ const grantedCount = computed(
 
 <template>
   {{ index || 0 > 0 ? `(${index})` : "" }}
-  <v-tooltip :text="tooltip" v-slot:activator="{ props: tooltip }" interactive>
-    <span class="itemWrapper" v-bind="tooltip">
-      <v-menu>
-        <template v-slot:activator="{ props: menu }">
-          <span class="itemWrapper" v-bind="menu">
-            <v-icon v-bind="menu" color="info" icon="mdi-menu" size="x-large" />
-            <span v-if="permissions.length > 0" class="itemTitle"
-              >{{ title }} ({{ grantedCount }}/{{ permissions.length }})</span
-            >
-            <span v-else class="itemTitle">{{ title }}x</span>
+  <span class="itemWrapper">
+    <v-tooltip class="tooltip" interactive :text="tooltip">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
+          <v-icon
+            v-if="grantedCount > permissions.length / 3"
+            color="error"
+            icon="mdi-account-outline"
+            size="x-large"
+          />
+          <v-icon
+            v-else
+            color="success"
+            icon="mdi-account-outline"
+            size="x-large"
+          />
+          <span class="itemTitle"
+            >{{ title }} ({{ grantedCount }}/{{ permissions.length }})
           </span>
-        </template>
-        <v-list>
-          <v-list-item
-            v-for="(permission, index) in permissions"
-            :key="index"
-            :value="index"
-          >
-            <v-list-item-title v-if="permission.obj.value === 'prompt'">
-              ({{ index + 1 }}) {{ permission.key }}:
-              <span class="prompt">{{ permission.obj.value }}</span>
-            </v-list-item-title>
-            <v-list-item-title v-else>
-              ({{ index + 1 }}) {{ permission.key }}:
-              <span class="denied">{{ permission.obj.value }}</span>
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </span>
-  </v-tooltip>
+        </span>
+      </template>
+    </v-tooltip>
+    <v-menu>
+      <template #activator="{ props: menuProps }">
+        <v-icon
+          color="info"
+          icon="mdi-information-outline"
+          size="small"
+          v-bind="menuProps"
+        />
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="(permission, index) in permissions"
+          :key="index"
+          :value="index"
+        >
+          <v-list-item-title v-if="permission.obj.value === 'prompt'">
+            ({{ index + 1 }}) {{ permission.key }}:
+            <span class="prompt">{{ permission.obj.value }}</span>
+          </v-list-item-title>
+          <v-list-item-title v-else-if="permission.obj.value === 'denied'">
+            ({{ index + 1 }}) {{ permission.key }}:
+            <span class="denied">{{ permission.obj.value }}</span>
+          </v-list-item-title>
+          <v-list-item-title v-else>
+            ({{ index + 1 }}) {{ permission.key }}:
+            <span class="granted">{{ permission.obj.value }}</span>
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </span>
 </template>
 
 <style scoped>
@@ -99,9 +121,14 @@ li {
 }
 
 .prompt {
+  color: blue;
+}
+
+.denied {
   color: green;
 }
-.denied {
+
+.granted {
   color: red;
 }
 </style>

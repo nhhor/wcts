@@ -39,21 +39,23 @@ const items = [
     child: Permissions,
     itemProps: {
       title: "Permissions",
-      tooltip: "They can see additional permissions... (CLICK ICON)",
+      tooltip: "They can see additional permissions... (CLICK ℹ FOR MORE INFO)",
     },
   },
   {
     child: Devices,
     itemProps: {
       title: "Devices",
-      tooltip: "They can see what devices you have connected... (CLICK ICON)",
+      tooltip:
+        "They can see what devices you have connected... (CLICK ℹ FOR MORE INFO)",
     },
   },
   {
     child: Visits,
     itemProps: {
       title: "Visits",
-      tooltip: "They can see all the times you have visited...",
+      tooltip:
+        "They can see all the times you have visited... (CLICK ℹ FOR MORE INFO)",
     },
   },
   {

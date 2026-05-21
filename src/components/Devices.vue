@@ -18,69 +18,77 @@ const {
 </script>
 
 <template>
-  <v-tooltip :text="tooltip" v-slot:activator="{ props }" interactive>
-    {{ index || 0 > 0 ? `(${index})` : "" }}
-    <span class="itemWrapper" v-bind="props">
-      <v-menu>
-        <template v-slot:activator="{ props: menu }">
-          <span class="itemWrapper" v-bind="menu">
-            <v-icon color="error" icon="mdi-devices" size="x-large" />
-            <span v-if="devices.length > 0" class="itemTitle"
-              >{{ title }} ({{ devices.length }})</span
-            >
-            <span v-else class="itemTitle">{{ title }}</span>
-            <p v-if="devices.length == 0">No devices found.</p>
-          </span>
-        </template>
-        <v-list v-if="devices.length > 0">
-          <v-list-item
-            v-for="(device, index) in devices"
-            :key="index"
-            :value="index"
+  {{ index || 0 > 0 ? `(${index})` : "" }}
+  <span class="itemWrapper">
+    <v-tooltip class="tooltip" interactive :text="tooltip">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
+          <v-icon color="error" icon="mdi-devices" size="x-large" />
+          <span v-if="devices.length > 0" class="itemTitle"
+            >{{ title }} ({{ devices.length }})</span
           >
-            <v-list-item-title>
-              <v-icon
-                size="small"
-                color="info"
-                icon="mdi-camera"
-                v-if="device.kind === 'videoinput'"
-              />
-              <v-icon
-                size="small"
-                color="info"
-                icon="mdi-microphone"
-                v-else-if="device.kind === 'audioinput'"
-              />
-              <v-icon
-                size="small"
-                color="info"
-                icon="mdi-speaker"
-                v-else-if="device.kind === 'audiooutput'"
-              />
-              [{{ index + 1 }}] {{ device.kind }}
-            </v-list-item-title>
-            <ul v-if="device.deviceId || device.label || device.groupId">
-              <li>
-                {
-                <span v-if="device.deviceId"
-                  >id: ...{{
-                    device.deviceId.substring(device.deviceId.length - 5)
-                  }},
-                </span>
-                <span v-if="device.label">label: {{ device.label }}, </span>
-                <span v-if="device.groupId"
-                  >groupId: ...{{
-                    device.groupId.substring(device.groupId.length - 5)
-                  }}</span
-                >
-                }
-              </li>
-            </ul>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </span>
-  </v-tooltip>
+          <span v-else class="itemTitle">{{ title }}</span>
+          <p v-if="devices.length == 0">No devices found.</p>
+        </span>
+      </template>
+    </v-tooltip>
+    <v-menu>
+      <template #activator="{ props: menuProps }">
+        <v-icon
+          color="info"
+          icon="mdi-information-outline"
+          size="small"
+          v-bind="menuProps"
+        />
+      </template>
+      <v-list v-if="devices.length > 0">
+        <v-list-item
+          v-for="(device, index) in devices"
+          :key="index"
+          :value="index"
+        >
+          <v-list-item-title>
+            <v-icon
+              size="small"
+              color="info"
+              icon="mdi-camera"
+              v-if="device.kind === 'videoinput'"
+            />
+            <v-icon
+              size="small"
+              color="info"
+              icon="mdi-microphone"
+              v-else-if="device.kind === 'audioinput'"
+            />
+            <v-icon
+              size="small"
+              color="info"
+              icon="mdi-speaker"
+              v-else-if="device.kind === 'audiooutput'"
+            />
+            [{{ index + 1 }}] {{ device.kind }}
+          </v-list-item-title>
+          <ul v-if="device.deviceId || device.label || device.groupId">
+            <li>
+              {
+              <span v-if="device.deviceId"
+                >id: ...{{
+                  device.deviceId.substring(device.deviceId.length - 5)
+                }},
+              </span>
+              <span v-if="device.label">label: {{ device.label }}, </span>
+              <span v-if="device.groupId"
+                >groupId: ...{{
+                  device.groupId.substring(device.groupId.length - 5)
+                }}</span
+              >
+              }
+            </li>
+          </ul>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </span>
 </template>
 
 <style scoped>
@@ -94,6 +102,12 @@ const {
   height: 100%;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
+  span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .itemTitle {

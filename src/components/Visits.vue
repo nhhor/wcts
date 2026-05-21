@@ -28,47 +28,47 @@ const bumpVisitOnMount = () => {
 <template>
   {{ bumpVisitOnMount() }}
   {{ index || 0 > 0 ? `(${index})` : "" }}
-  <v-tooltip :text="tooltip" v-slot:activator="{ props: tooltip }" interactive>
-    <span v-bind="tooltip">
-      <v-menu>
-        <template v-slot:activator="{ props: menu }">
-          <span class="itemWrapper">
-            <v-icon
-              v-if="visitTimes.length > 1"
-              icon="mdi-counter"
-              size="x-large"
-              color="error"
-            />
-            <v-icon v-else icon="mdi-counter" size="x-large" color="success" />
-            <span class="itemTitle">{{ title }} ({{ visitTimes.length }})</span>
-            <v-icon
-              v-bind="menu"
-              color="info"
-              icon="mdi-information-outline"
-              size="small"
-            />
-          </span>
+  <span class="itemWrapper">
+    <v-tooltip class="tooltip" interactive :text="tooltip">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
+          <v-icon
+            v-if="visitTimes.length > 1"
+            icon="mdi-counter"
+            size="x-large"
+            color="error"
+          />
+          <v-icon v-else icon="mdi-counter" size="x-large" color="success" />
+          <span class="itemTitle">{{ title }} ({{ visitTimes.length }})</span>
+        </span>
+      </template>
+    </v-tooltip>
+    <v-menu>
+      <template #activator="{ props: menuProps }">
+        <v-icon
+          color="info"
+          icon="mdi-information-outline"
+          size="small"
+          v-bind="menuProps"
+        />
+      </template>
+      <v-list>
+        <template
+          v-for="(visit, index) in visitTimes"
+          :key="index"
+          :value="index"
+        >
+          <v-list-item v-if="index < 4 || index >= visitTimes.length - 5">
+            ({{ index + 1 }})
+            {{ new Date(visit).toLocaleString([], { timeZoneName: "short" }) }}
+          </v-list-item>
+          <v-list-item v-else-if="index === 5">
+            <pre>   ...</pre>
+          </v-list-item>
         </template>
-        <v-list>
-          <template
-            v-for="(visit, index) in visitTimes"
-            :key="index"
-            :value="index"
-          >
-            <v-list-item v-if="index < 4 || index >= visitTimes.length - 5">
-              ({{ index + 1 }})
-              {{
-                new Date(visit).toLocaleString([], { timeZoneName: "short" })
-              }}
-            </v-list-item>
-            <v-list-item v-else-if="index === 5">
-              <pre>   ...</pre>
-            </v-list-item>
-          </template>
-        </v-list>
-      </v-menu>
-    </span>
-  </v-tooltip>
+      </v-list>
+    </v-menu>
+  </span>
 </template>
 
 <style scoped>
@@ -81,6 +81,12 @@ const bumpVisitOnMount = () => {
   height: 100%;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
+  span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .itemTitle {
