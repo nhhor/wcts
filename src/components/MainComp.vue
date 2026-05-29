@@ -14,6 +14,7 @@ import KeyStrokes from "./KeyStrokes.vue";
 import Permissions from "./Permissions.vue";
 import Devices from "./Devices.vue";
 import Visits from "./Visits.vue";
+import WindowNavigator from "./WindowNavigator.vue";
 
 const items = shallowRef([
   {
@@ -48,6 +49,14 @@ const items = shallowRef([
     itemProps: {
       title: "Permissions",
       tooltip: "They can see additional permissions... (CLICK ℹ FOR MORE INFO)",
+    },
+  },
+  {
+    child: markRaw(WindowNavigator),
+    itemProps: {
+      title: "Browser",
+      tooltip:
+        "They can see information about your browser... (CLICK ℹ FOR MORE INFO)",
     },
   },
   {
@@ -87,7 +96,7 @@ const cycleItems = (arr: any[]) => {
   arr.unshift(firstElement);
 };
 
-useInterval(9999, {
+useInterval(99999, {
   callback: () => {
     cycleItems(items.value);
     items.value = [...items.value];

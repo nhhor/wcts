@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useDevicesList } from "@vueuse/core";
 import { VIcon, VTooltip } from "vuetify/components";
 
 const { title, tooltip, index } = defineProps({
@@ -8,12 +7,39 @@ const { title, tooltip, index } = defineProps({
   tooltip: String,
 });
 
-const {
-  devices,
-  videoInputs: cameras,
-  audioInputs: microphones,
-  audioOutputs: speakers,
-} = useDevicesList({ requestPermissions: true });
+// if (navigator.geolocation) {
+//   navigator.geolocation.getCurrentPosition(showPosition);
+// } else {
+//   ("Geolocation is not supported by this browser.");
+// }
+
+// function showPosition(position: GeolocationPosition) {
+//   console.log(
+//     "Latitude: " +
+//       position.coords.latitude +
+//       " Longitude: " +
+//       position.coords.longitude,
+//   );
+// }
+
+const userAgentData = [
+  {
+    name: "Cookies Enabled",
+    data: navigator.cookieEnabled,
+  },
+  {
+    name: "Language",
+    data: navigator.language,
+  },
+  {
+    name: "Online",
+    data: navigator.onLine,
+  },
+  {
+    name: "User Agent",
+    data: navigator.userAgent,
+  },
+];
 </script>
 
 <template>
@@ -22,12 +48,15 @@ const {
     <v-tooltip class="tooltip" interactive :text="tooltip">
       <template #activator="{ props: tooltipProps }">
         <span v-bind="tooltipProps">
-          <v-icon color="error" icon="mdi-devices" size="x-large" />
-          <span v-if="devices.length > 0" class="itemTitle"
-            >{{ title }} ({{ devices.length }})</span
+          <v-icon
+            color="error"
+            icon="mdi-application-brackets-outline"
+            size="x-large"
+          />
+          <span v-if="userAgentData.length > 0" class="itemTitle"
+            >{{ title }} ({{ userAgentData.length }})</span
           >
           <span v-else class="itemTitle">{{ title }}</span>
-          <p v-if="devices.length == 0">No devices found.</p>
         </span>
       </template>
     </v-tooltip>
@@ -40,50 +69,22 @@ const {
           v-bind="menuProps"
         />
       </template>
-      <v-list v-if="devices.length > 0">
+      <v-list v-if="userAgentData.length > 0">
         <v-list-item
-          v-for="(device, index) in devices"
+          v-for="(device, index) in userAgentData"
           :key="index"
           :value="index"
+          class="dataSpan2"
         >
           <v-list-item-title>
             <v-icon
               size="small"
               color="info"
-              icon="mdi-camera"
-              v-if="device.kind === 'videoinput'"
+              icon="mdi-application-cog-outline"
             />
-            <v-icon
-              size="small"
-              color="info"
-              icon="mdi-microphone"
-              v-else-if="device.kind === 'audioinput'"
-            />
-            <v-icon
-              size="small"
-              color="info"
-              icon="mdi-speaker"
-              v-else-if="device.kind === 'audiooutput'"
-            />
-            [{{ index + 1 }}] {{ device.kind }}
+            [{{ index + 1 }}] {{ device.name }}:
+            <span class="dataSpan">{{ device.data }}</span>
           </v-list-item-title>
-          <ul v-if="device.deviceId || device.label || device.groupId">
-            <li>
-              {
-              <span v-if="device.deviceId"
-                >id: ...{{
-                  device.deviceId.substring(device.deviceId.length - 5)
-                }},
-              </span>
-              <span v-if="device.label">label: {{ device.label }}, </span>
-              <span v-if="device.groupId"
-                >groupId: ...{{
-                  device.groupId.substring(device.groupId.length - 5)
-                }}</span
-              >
-              }
-            </li>
-          </ul>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -91,6 +92,20 @@ const {
 </template>
 
 <style scoped>
+.dataSpan {
+  font-weight: 600;
+  /* max-width: 500px; */
+  /* display: block; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* text-align: center; */
+}
+
 .itemWrapper {
   display: flex;
   flex-direction: column;
