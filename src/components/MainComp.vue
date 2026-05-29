@@ -34,21 +34,22 @@ const items = shallowRef([
     child: markRaw(MousePressed),
     itemProps: {
       title: "Mouse Pressed",
-      tooltip: "They can see if your mouse is pressed...",
+      tooltip: "They can see when you press your mouse/tap...",
     },
   },
   {
     child: markRaw(KeyStrokes),
     itemProps: {
       title: "Key Strokes",
-      tooltip: "They can see what keys you are pressing...",
+      tooltip: "They can see what keys you press...",
     },
   },
   {
     child: markRaw(Permissions),
     itemProps: {
       title: "Permissions",
-      tooltip: "They can see additional permissions... (CLICK ℹ FOR MORE INFO)",
+      tooltip:
+        "They can see what permissions you have granted... (CLICK ℹ FOR MORE INFO)",
     },
   },
   {
