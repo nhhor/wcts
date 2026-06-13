@@ -2,7 +2,7 @@
 
 This is a personal project meant to educate users on _some_ of the many datapoints any website could gather from its users. Hoping to encourage people to take a more proactive apporach to thier data security.
 
----
+- bump
 
 ### Deployed to https://nhhor.github.io/wcts/
 
