@@ -7,50 +7,7 @@ const { title, tooltip, index } = defineProps({
   tooltip: String,
 });
 
-// if (navigator.geolocation) {
-//   navigator.geolocation.getCurrentPosition(showPosition);
-// } else {
-//   ("Geolocation is not supported by this browser.");
-// }
-
-// function showPosition(position: GeolocationPosition) {
-//   console.log(
-//     "Latitude: " +
-//       position.coords.latitude +
-//       " Longitude: " +
-//       position.coords.longitude,
-//   );
-// }
-
-const windowNavigator = [
-  {
-    name: "Cookies Enabled",
-    data: navigator?.cookieEnabled,
-  },
-  {
-    name: "Language",
-    data: navigator?.language,
-  },
-  {
-    name: "Online",
-    data: navigator?.onLine === true ? "True" : "False",
-  },
-  {
-    name: "Do Not Track Requested",
-    data: navigator?.doNotTrack === "1" ? "True" : "False",
-  },
-  {
-    name: "PDF Viewer Enabled",
-    data: navigator?.pdfViewerEnabled === true ? "True" : "False",
-  },
-  {
-    name: "User Activation",
-    data: {
-      hasBeenActive: navigator?.userActivation?.hasBeenActive,
-      isActive: navigator?.userActivation?.isActive,
-    },
-  },
-];
+const userAgentData = navigator.userAgent.split(/[\(\)]/);
 </script>
 
 <template>
@@ -61,12 +18,12 @@ const windowNavigator = [
         <span v-bind="tooltipProps">
           <v-icon
             color="error"
-            icon="mdi-application-brackets-outline"
+            icon="mdi-badge-account-outline"
             size="x-large"
           />
-          <span v-if="windowNavigator.length > 0" class="itemTitle"
-            >{{ title }} ({{ windowNavigator.length }})</span
-          >
+          <span v-if="userAgentData.length > 0" class="itemTitle">{{
+            title
+          }}</span>
           <span v-else class="itemTitle">{{ title }}</span>
         </span>
       </template>
@@ -80,31 +37,26 @@ const windowNavigator = [
           v-bind="menuProps"
         />
       </template>
-      <v-list v-if="windowNavigator.length > 0">
+      <v-list>
         <v-list-item
-          v-for="(device, index) in windowNavigator"
+          v-for="(data, index) in userAgentData"
           :key="index"
-          :value="index"
           class="dataSpan2"
         >
           <v-list-item-title>
             <v-icon
+              v-if="index == 1"
               size="small"
               color="info"
-              icon="mdi-application-cog-outline"
+              icon="mdi-card-account-mail-outline"
             />
-            [{{ index + 1 }}] {{ device.name }}:
-            <template v-if="typeof device.data === 'object'">
-              <span
-                v-for="(value, key) in device?.data"
-                :key="key"
-                class="dataSpan"
-              >
-                {{ key }}: {{ value }}{{ ", " }}
-              </span>
-            </template>
-
-            <span v-else class="dataSpan">{{ device.data }}</span>
+            <v-icon
+              v-else
+              size="small"
+              color="white"
+              icon="mdi-card-account-mail-outline"
+            />
+            <span class="dataSpan">{{ " " }}{{ data }}</span>
           </v-list-item-title>
         </v-list-item>
       </v-list>

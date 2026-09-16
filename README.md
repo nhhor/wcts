@@ -20,7 +20,6 @@ This is a personal project meant to educate users on _some_ of the many datapoin
 
 ## Idea Scratchpad:
 
-- UserAgent data
 - IP Address – Used to approximate the user’s location and track their internet activity.
   - Geolocation (city, region, country)
 - Referring URL and clickstream data

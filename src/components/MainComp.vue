@@ -15,6 +15,8 @@ import Permissions from "./Permissions.vue";
 import Devices from "./Devices.vue";
 import Visits from "./Visits.vue";
 import WindowNavigator from "./WindowNavigator.vue";
+import WindowSize from "./WindowSize.vue";
+import UserAgent from "./UserAgent.vue";
 
 const items = shallowRef([
   {
@@ -61,6 +63,14 @@ const items = shallowRef([
     },
   },
   {
+    child: markRaw(UserAgent),
+    itemProps: {
+      title: "User Agent",
+      tooltip:
+        "They can see infor about your system... (CLICK ℹ FOR MORE INFO)",
+    },
+  },
+  {
     child: markRaw(Devices),
     itemProps: {
       title: "Devices",
@@ -77,16 +87,15 @@ const items = shallowRef([
     },
   },
   {
-    src: "https://assets.codepen.io/2017/17_05_a_amur_leopard_21.jpg",
-    alt: "Amur leopard cub with very blue eyes",
-  },
-  {
-    src: "https://assets.codepen.io/2017/17_05_a_amur_leopard_27.jpg",
-    alt: "Amur leopard cub with very blue eyes",
+    child: markRaw(WindowSize),
+    itemProps: {
+      title: "Window Size",
+      tooltip: "They can see how big your window is...",
+    },
   },
   {
     src: "https://assets.codepen.io/2017/17_05_a_amur_leopard_30.jpg",
-    alt: "fluffy, alert Amur leopard",
+    alt: "I never thought leopards would eat my face...",
   },
 ]);
 
