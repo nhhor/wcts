@@ -51,23 +51,21 @@ const items = shallowRef([
     itemProps: {
       title: "Permissions",
       tooltip:
-        "They can see what permissions you have granted... (CLICK ℹ FOR MORE INFO)",
+        "They can see what permissions you have granted... (CLICK ℹ FOR DETAILS)",
     },
   },
   {
     child: markRaw(WindowNavigator),
     itemProps: {
       title: "Browser",
-      tooltip:
-        "They can see information about your browser... (CLICK ℹ FOR MORE INFO)",
+      tooltip: "They can see info about your browser... (CLICK ℹ FOR DETAILS)",
     },
   },
   {
     child: markRaw(UserAgent),
     itemProps: {
       title: "User Agent",
-      tooltip:
-        "They can see infor about your system... (CLICK ℹ FOR MORE INFO)",
+      tooltip: "They can see info about your system... (CLICK ℹ FOR DETAILS)",
     },
   },
   {
@@ -75,7 +73,7 @@ const items = shallowRef([
     itemProps: {
       title: "Devices",
       tooltip:
-        "They can see what devices you have connected... (CLICK ℹ FOR MORE INFO)",
+        "They can see what devices you have connected... (CLICK ℹ FOR DETAILS)",
     },
   },
   {
@@ -83,7 +81,7 @@ const items = shallowRef([
     itemProps: {
       title: "Visits",
       tooltip:
-        "They can see all the times you have visited... (CLICK ℹ FOR MORE INFO)",
+        "They can see all the times you have visited... (CLICK ℹ FOR DETAILS)",
     },
   },
   {
