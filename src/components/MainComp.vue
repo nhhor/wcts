@@ -17,6 +17,7 @@ import Visits from "./Visits.vue";
 import WindowNavigator from "./WindowNavigator.vue";
 import WindowSize from "./WindowSize.vue";
 import UserAgent from "./UserAgent.vue";
+import IPAddress from "./IPAddress.vue";
 
 const items = shallowRef([
   {
@@ -66,6 +67,13 @@ const items = shallowRef([
     itemProps: {
       title: "User Agent",
       tooltip: "They can see info about your system... (CLICK ℹ FOR DETAILS)",
+    },
+  },
+  {
+    child: markRaw(IPAddress),
+    itemProps: {
+      title: "IP Address",
+      tooltip: "They can see your IP address... (CLICK ℹ FOR DETAILS)",
     },
   },
   {

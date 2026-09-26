@@ -20,8 +20,6 @@ This is a personal project meant to educate users on _some_ of the many datapoin
 
 ## Idea Scratchpad:
 
-- IP Address – Used to approximate the user’s location and track their internet activity.
-  - Geolocation (city, region, country)
 - Referring URL and clickstream data
 - Browser Type & Version – Identifies the software and version being used (e.g., Chrome 120, Firefox 115).
 - Operating System – Reveals the user’s device OS (e.g., Windows 11, macOS Ventura, Android 13).
