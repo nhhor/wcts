@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useDevicesList } from "@vueuse/core";
+import { onScopeDispose, shallowRef } from "vue";
 import { VIcon, VTooltip } from "vuetify/components";
 
 const { title, tooltip, index } = defineProps({
@@ -8,12 +9,37 @@ const { title, tooltip, index } = defineProps({
   tooltip: String,
 });
 
-const {
-  devices,
-  videoInputs: cameras,
-  audioInputs: microphones,
-  audioOutputs: speakers,
-} = useDevicesList({ requestPermissions: true });
+const displayedDevices = shallowRef<MediaDeviceInfo[]>([]);
+const hasDeviceSnapshot = shallowRef(false);
+let emptyDevicesTimer: ReturnType<typeof setTimeout> | undefined;
+
+function updateDisplayedDevices(nextDevices: MediaDeviceInfo[]) {
+  if (emptyDevicesTimer) {
+    clearTimeout(emptyDevicesTimer);
+    emptyDevicesTimer = undefined;
+  }
+
+  if (nextDevices.length > 0) {
+    displayedDevices.value = nextDevices;
+    hasDeviceSnapshot.value = true;
+    return;
+  }
+
+  emptyDevicesTimer = setTimeout(() => {
+    displayedDevices.value = [];
+    hasDeviceSnapshot.value = true;
+    emptyDevicesTimer = undefined;
+  }, 500);
+}
+
+onScopeDispose(() => {
+  if (emptyDevicesTimer) clearTimeout(emptyDevicesTimer);
+});
+
+useDevicesList({
+  requestPermissions: true,
+  onUpdated: updateDisplayedDevices,
+});
 </script>
 
 <template>
@@ -23,11 +49,13 @@ const {
       <template #activator="{ props: tooltipProps }">
         <span v-bind="tooltipProps">
           <v-icon color="error" icon="mdi-devices" size="x-large" />
-          <span v-if="devices.length > 0" class="itemTitle"
-            >{{ title }} ({{ devices.length }})</span
+          <span v-if="displayedDevices.length > 0" class="itemTitle"
+            >{{ title }} ({{ displayedDevices.length }})</span
           >
           <span v-else class="itemTitle">{{ title }}</span>
-          <p v-if="devices.length == 0">No devices found.</p>
+          <p v-if="hasDeviceSnapshot && displayedDevices.length === 0">
+            No devices found
+          </p>
         </span>
       </template>
     </v-tooltip>
@@ -40,9 +68,9 @@ const {
           v-bind="menuProps"
         />
       </template>
-      <v-list v-if="devices.length > 0">
+      <v-list v-if="displayedDevices.length > 0">
         <v-list-item
-          v-for="(device, index) in devices"
+          v-for="(device, index) in displayedDevices"
           :key="index"
           :value="index"
         >

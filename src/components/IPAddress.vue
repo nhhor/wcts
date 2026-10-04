@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, computed } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { VIcon, VTooltip } from "vuetify/components";
 
 const { title, tooltip, index } = defineProps({
@@ -19,28 +19,20 @@ function titleize(s: string): string {
     .join(" ");
 }
 
-let ipData: {
+const ipData = ref<{
   readme?: string;
-  state: string;
+  status?: string;
   ip?: string;
-} = { state: "Loading..." };
-
-const visitTimes = computed<string[]>({
-  get: () => ipData,
-  // set: (value: string[]) => {
-  //   ipData = value;
-  // },
-});
+  postal?: string;
+  city?: string;
+}>({ status: "Loading..." });
 
 onBeforeMount(() => {
   fetch("https://ipinfo.io/json")
     .then((response) => response.json())
     .then((data) => {
-      ipData = { ...data };
-      delete ipData?.readme;
-      // ipData.push(new Date().toISOString());
-
-      console.log(ipData);
+      ipData.value = { ...data };
+      delete ipData.value.readme;
     })
     .catch((error) => {
       console.error("Error fetching IP address:", error);
@@ -57,7 +49,13 @@ onBeforeMount(() => {
         <span v-bind="tooltipProps">
           <v-icon color="error" icon="mdi-network-pos" size="x-large" />
           <span class="itemTitle">{{ title }}</span>
-          {{ ipData?.state || ipData?.ip }}
+
+          alert-octagon-outline
+
+          {{ ipData?.ip || ipData?.status }}
+          <span class="itemFooter">{{
+            `${ipData?.postal ? ipData?.city + ", " + ipData?.postal : ""}`
+          }}</span>
         </span>
       </template>
     </v-tooltip>
@@ -85,9 +83,8 @@ onBeforeMount(() => {
               color="white"
               icon="mdi-ip-network-outline"
             />
-            <span class="dataSpan"
-              >{{ " " }}{{ titleize(key) }}{{ ": " }}{{ data }}</span
-            >
+            <span class="dataSpan">{{ " " }}{{ titleize(key) }}</span
+            ><span>{{ ": " }}{{ data }}</span>
           </v-list-item-title>
         </v-list-item>
       </v-list>
@@ -129,8 +126,11 @@ onBeforeMount(() => {
 }
 
 .itemTitle {
-  text-align: center;
   font-weight: 700;
+}
+
+.itemFooter {
+  font-weight: 100;
 }
 
 p {
