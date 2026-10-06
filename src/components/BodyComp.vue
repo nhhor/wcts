@@ -112,7 +112,8 @@ const cycleItems = (arr: any[]) => {
   arr.unshift(firstElement);
 };
 
-useInterval(99999, {
+const interval = 199999; // 199999ms = 199.999 seconds = 3.333 minutes
+useInterval(interval, {
   callback: () => {
     cycleItems(items.value);
     items.value = [...items.value];

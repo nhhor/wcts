@@ -8,6 +8,11 @@
 </template>
 
 <style scoped>
+.footer {
+  text-align: center;
+  padding: 2rem 0;
+}
+
 h3 {
   font-weight: 500;
   font-size: 1.8rem;
